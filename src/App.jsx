@@ -1,4 +1,5 @@
 import Player from "./CO/Player";
+import GaBo from "./CO/GaBo";
 
 function App() {
   return (
@@ -8,7 +9,7 @@ function App() {
           <Player initalName="PUS1" symbol="👄" />
           <Player initalName="PUS2" symbol="🍑" />
         </ol>
-        GAMEBOARD
+        <GaBo />
       </div>
       LOG
     </main>
