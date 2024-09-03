@@ -3,6 +3,7 @@ import GaBo from "./CO/GaBo";
 import { useState } from "react";
 import GaLog from "./CO/GaLog";
 import { W_C } from "./CO/wico";
+import GameOver from "./CO/GaOv";
 
 const initialGameBoard = [
   [null, null, null],
@@ -86,7 +87,7 @@ function App() {
             isActive={activePlayer === "🍑"}
           />
         </ol>
-        {winnner && <p> WIN, {winnner} !</p>}
+        {winnner && <GameOver winner={winnner} />}
         <GaBo onSelectSquare={handleSelectSquare} board={gameBoard} />
       </div>
       <GaLog turns={gameTurns} />
