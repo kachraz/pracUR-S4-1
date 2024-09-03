@@ -1,7 +1,7 @@
 // gfame over screen
 import upsa from "/x.webp";
 
-export default function GameOver({ winner }) {
+export default function GameOver({ winner, onRestart }) {
   return (
     <div id="game-over">
       <img src={upsa} alt="SnortHerPussyJuice" />
@@ -9,7 +9,7 @@ export default function GameOver({ winner }) {
       {winner && <p>{winner} SMELLPANTY</p>}
       {!winner && <p>😡DRAW😡</p>}
       <p>
-        <button>ReFuck</button>
+        <button onClick={onRestart}>ReFuck</button>
       </p>
     </div>
   );
