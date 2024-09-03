@@ -13,18 +13,26 @@ const initialGameBoard = [
 export default function GaBo() {
   const [gameBoard, setGameBoard] = useState(initialGameBoard);
 
-  function handleSelectSquare() {
-    setGameBoard();
+  function handleSelectSquare(rowIndex, colIndex) {
+    setGameBoard((prevGameBoard) => {
+      const updatedBoard = [
+        ...prevGameBoard.map((innerArray) => [...innerArray]),
+      ];
+      updatedBoard[rowIndex][colIndex] = "👄";
+      return updatedBoard;
+    });
   }
 
   return (
     <ol id="game-board">
-      {initialGameBoard.map((row, rowIndex) => (
+      {gameBoard.map((row, rowIndex) => (
         <li key={rowIndex}>
           <ol>
-            {row.map((playeSymbol, colindex) => (
-              <li key={colindex}>
-                <button>{playeSymbol}</button>
+            {row.map((playeSymbol, colIndex) => (
+              <li key={colIndex}>
+                <button onClick={() => handleSelectSquare(rowIndex, colIndex)}>
+                  {playeSymbol}
+                </button>
               </li>
             ))}
           </ol>
