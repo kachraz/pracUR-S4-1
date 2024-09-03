@@ -3,20 +3,28 @@ import GaBo from "./CO/GaBo";
 import { useState } from "react";
 import GaLog from "./CO/GaLog";
 
+function deriveActivePlayer(gameTurns) {
+  let currentPlayer = "👄";
+
+  if (gameTurns.length > 0 && gameTurns[0].player === "👄") {
+    currentPlayer = "🍑";
+  }
+
+  return currentPlayer;
+}
+
 function App() {
   const [gameTurns, setGameTurns] = useState([]);
-  const [activePlayer, setActivePlayer] = useState("👄");
+  // const [activePlayer, setActivePlayer] = useState("👄");
+
+  const activePlayer = deriveActivePlayer(gameTurns);
 
   function handleSelectSquare(rowIndex, colIndex) {
-    setActivePlayer((curActivePlayer) =>
-      curActivePlayer === "👄" ? "🍑" : "👄"
-    );
+    // setActivePlayer((curActivePlayer) =>
+    //   curActivePlayer === "👄" ? "🍑" : "👄"
+    // );
     setGameTurns((prevTurns) => {
-      let currentPlayer = "👄";
-
-      if (prevTurns.length > 0 && prevTurns[0].player === "👄") {
-        currentPlayer = "🍑";
-      }
+      const currentPlayer = deriveActivePlayer(prevTurns);
 
       const updatedTurns = [
         { square: { row: rowIndex, col: colIndex }, player: currentPlayer },
