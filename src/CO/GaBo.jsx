@@ -36,7 +36,10 @@ export default function GaBo({ onSelectSquare, turns }) {
           <ol>
             {row.map((playeSymbol, colIndex) => (
               <li key={colIndex}>
-                <button onClick={() => onSelectSquare(rowIndex, colIndex)}>
+                <button
+                  onClick={() => onSelectSquare(rowIndex, colIndex)}
+                  disabled={playeSymbol !== null}
+                >
                   {playeSymbol}
                 </button>
               </li>
