@@ -1,8 +1,6 @@
 // 3 X 3 Game Board here
 // Characters to add - "👄" & "🍑"
 
-import { useState } from "react";
-
 // Array full of arrays which are full of nulls
 const initialGameBoard = [
   [null, null, null],
@@ -10,20 +8,26 @@ const initialGameBoard = [
   [null, null, null],
 ];
 
-export default function GaBo({ onSelectSquare, activePlayerSymbol }) {
-  const [gameBoard, setGameBoard] = useState(initialGameBoard);
+export default function GaBo({ onSelectSquare, turns }) {
+  let gameBoard = initialGameBoard;
 
-  function handleSelectSquare(rowIndex, colIndex) {
-    setGameBoard((prevGameBoard) => {
-      const updatedBoard = [
-        ...prevGameBoard.map((innerArray) => [...innerArray]),
-      ];
-      updatedBoard[rowIndex][colIndex] = activePlayerSymbol;
-      return updatedBoard;
-    });
+  for (const turn of turns) {
+    const { square, player } = turn;
+    const { row, col } = square;
 
-    onSelectSquare();
+    gameBoard[row][col] = player;
   }
+
+  // const [gameBoard, setGameBoard] = useState(initialGameBoard);
+  // function handleSelectSquare(rowIndex, colIndex) {
+  //   setGameBoard((prevGameBoard) => {
+  //     const updatedBoard = [
+  //       ...prevGameBoard.map((innerArray) => [...innerArray]),
+  //     ];
+  //     updatedBoard[rowIndex][colIndex] = activePlayerSymbol;
+  //     return updatedBoard;
+  //   });
+  //   onSelectSquare();
 
   return (
     <ol id="game-board">
@@ -32,7 +36,7 @@ export default function GaBo({ onSelectSquare, activePlayerSymbol }) {
           <ol>
             {row.map((playeSymbol, colIndex) => (
               <li key={colIndex}>
-                <button onClick={() => handleSelectSquare(rowIndex, colIndex)}>
+                <button onClick={() => onSelectSquare(rowIndex, colIndex)}>
                   {playeSymbol}
                 </button>
               </li>

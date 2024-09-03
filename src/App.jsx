@@ -1,14 +1,30 @@
 import Player from "./CO/Player";
 import GaBo from "./CO/GaBo";
 import { useState } from "react";
+import GaLog from "./CO/GaLog";
 
 function App() {
+  const [gameTurns, setGameTurns] = useState([]);
   const [activePlayer, setActivePlayer] = useState("👄");
 
-  function handleSelectSquare() {
+  function handleSelectSquare(rowIndex, colIndex) {
     setActivePlayer((curActivePlayer) =>
       curActivePlayer === "👄" ? "🍑" : "👄"
     );
+    setGameTurns((prevTurns) => {
+      let currentPlayer = "👄";
+
+      if (prevTurns.length > 0 && prevTurns[0].player === "👄") {
+        currentPlayer = "🍑";
+      }
+
+      const updatedTurns = [
+        { square: { row: rowIndex, col: colIndex }, player: currentPlayer },
+        ...prevTurns,
+      ];
+
+      return updatedTurns;
+    });
   }
 
   return (
@@ -26,12 +42,9 @@ function App() {
             isActive={activePlayer === "🍑"}
           />
         </ol>
-        <GaBo
-          onSelectSquare={handleSelectSquare}
-          activePlayerSymbol={activePlayer}
-        />
+        <GaBo onSelectSquare={handleSelectSquare} turns={gameTurns} />
       </div>
-      LOG
+      <GaLog turns={gameTurns} />
     </main>
   );
 }
