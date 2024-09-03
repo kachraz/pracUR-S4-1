@@ -2,6 +2,13 @@ import Player from "./CO/Player";
 import GaBo from "./CO/GaBo";
 import { useState } from "react";
 import GaLog from "./CO/GaLog";
+import { W_C } from "./CO/wico";
+
+const initialGameBoard = [
+  [null, null, null],
+  [null, null, null],
+  [null, null, null],
+];
 
 function deriveActivePlayer(gameTurns) {
   let currentPlayer = "👄";
@@ -15,9 +22,38 @@ function deriveActivePlayer(gameTurns) {
 
 function App() {
   const [gameTurns, setGameTurns] = useState([]);
+  // const [hasWinner, setHasWinner] = useState(false);
   // const [activePlayer, setActivePlayer] = useState("👄");
 
   const activePlayer = deriveActivePlayer(gameTurns);
+
+  let gameBoard = initialGameBoard;
+
+  for (const turn of gameTurns) {
+    const { square, player } = turn;
+    const { row, col } = square;
+
+    gameBoard[row][col] = player;
+  }
+
+  let winnner;
+
+  for (const combination of W_C) {
+    const firstSquareSymbol =
+      gameBoard[combination[0].row][combination[0].column];
+    const secondSquareSymbol =
+      gameBoard[combination[1].row][combination[1].column];
+    const thirdSquareSymbol =
+      gameBoard[combination[2].row][combination[2].column];
+
+    if (
+      firstSquareSymbol &&
+      firstSquareSymbol === secondSquareSymbol &&
+      firstSquareSymbol === thirdSquareSymbol
+    ) {
+      winnner = firstSquareSymbol;
+    }
+  }
 
   function handleSelectSquare(rowIndex, colIndex) {
     // setActivePlayer((curActivePlayer) =>
@@ -50,7 +86,8 @@ function App() {
             isActive={activePlayer === "🍑"}
           />
         </ol>
-        <GaBo onSelectSquare={handleSelectSquare} turns={gameTurns} />
+        {winnner && <p> WIN, {winnner} !</p>}
+        <GaBo onSelectSquare={handleSelectSquare} board={gameBoard} />
       </div>
       <GaLog turns={gameTurns} />
     </main>
