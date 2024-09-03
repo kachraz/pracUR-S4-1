@@ -37,7 +37,7 @@ function App() {
     gameBoard[row][col] = player;
   }
 
-  let winnner;
+  let winner;
 
   for (const combination of W_C) {
     const firstSquareSymbol =
@@ -52,9 +52,11 @@ function App() {
       firstSquareSymbol === secondSquareSymbol &&
       firstSquareSymbol === thirdSquareSymbol
     ) {
-      winnner = firstSquareSymbol;
+      winner = firstSquareSymbol;
     }
   }
+
+  const hasDraw = gameTurns.length === 9 && !winner;
 
   function handleSelectSquare(rowIndex, colIndex) {
     // setActivePlayer((curActivePlayer) =>
@@ -87,7 +89,7 @@ function App() {
             isActive={activePlayer === "🍑"}
           />
         </ol>
-        {winnner && <GameOver winner={winnner} />}
+        {(winner || hasDraw) && <GameOver winner={winner} />}
         <GaBo onSelectSquare={handleSelectSquare} board={gameBoard} />
       </div>
       <GaLog turns={gameTurns} />

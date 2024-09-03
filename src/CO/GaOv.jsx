@@ -4,7 +4,8 @@ export default function GameOver({ winner }) {
   return (
     <div id="game-over">
       <h2>FUCKED</h2>
-      <p>{winner} SMELLPANTY</p>
+      {winner && <p>{winner} SMELLPANTY</p>}
+      {!winner && <p>😡DRAW😡</p>}
       <p>
         <button>ReFuck</button>
       </p>
